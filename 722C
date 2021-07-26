@@ -1,0 +1,61 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define pb push_back
+#define st first
+#define nd second
+#define lb lower_bound
+#define ub upper_bound
+#define bit(x, i) ((x>>i)&1)
+#define x real()
+#define y imag()
+ 
+typedef long long ll;
+typedef long double ld;
+typedef complex<ll> pt;
+ 
+const ld EPS=0.00000001;
+const ll INF=1e18;
+const ll mod=1e9+7;
+
+#define int ll
+
+int n,a[100005],p[100005],dsu[100005],sum[100005],rm[100005],mx;
+vector<int> ans={0};
+
+int rt(int u) {
+    return dsu[u]<0?u:(dsu[u]=rt(dsu[u]));
+}
+
+void mrg(int u,int v) {
+    if((u=rt(u))==(v=rt(v))) return;
+    if(dsu[u]>dsu[v]) swap(u,v);
+    dsu[u]+=dsu[v]; sum[u]+=sum[v];
+    dsu[v]=u;
+}
+
+signed main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
+    
+    cin>>n;
+    for(int i=1;i<=n;++i) {
+        cin>>a[i];
+        dsu[i]=-1;
+        sum[i]=a[i];
+    }
+    for(int i=1;i<=n;++i) cin>>p[i];
+    
+    for(int i=n;i>1;--i) {
+        rm[p[i]]=1;
+        if(p[i]<n&&rm[p[i]+1]) mrg(p[i],p[i]+1);
+        if(p[i]>1&&rm[p[i]-1]) mrg(p[i],p[i]-1);
+        
+        mx=max(mx,sum[rt(p[i])]);
+        ans.pb(mx);
+    }
+    reverse(ans.begin(),ans.end());
+    for(int i:ans) cout<<i<<"\n";
+
+	return 0;
+}
