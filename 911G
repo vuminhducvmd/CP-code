@@ -1,0 +1,24 @@
+#pragma GCC optimize("Ofast")
+#pragma GCC target("sse2")
+#pragma GCC target("avx,avx2,fma")
+#pragma GCC optimization ("unroll-loops")
+ 
+#include <bits/stdc++.h>
+ 
+int n,q,i,j,l,r;
+unsigned char a[200005],x,y;
+ 
+signed main() {
+    scanf("%d",&n);
+    for(i=1;i<=n;++i) scanf("%hhu",&a[i]);
+    scanf("%d",&q);
+    for(i=1;i<=q;++i) {
+        scanf("%d %d %hhu %hhu",&l,&r,&x,&y);
+        for(j=l;j<=r;++j) {
+            if(a[j]==x) a[j]=y;
+        }
+    }
+    for(i=1;i<=n;++i) printf("%hhu ",a[i]);
+    
+	return 0;
+}
